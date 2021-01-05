@@ -7,8 +7,7 @@ public class VehicleInputListener extends InputListener {
 
     @Override
     public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-        ((Vehicle) event.getTarget()).started = !((Vehicle) event.getTarget()).started;
-        return true;
+        return super.touchDown(event, x, y, pointer, button);
     }
 
     @Override

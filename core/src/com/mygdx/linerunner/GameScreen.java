@@ -17,7 +17,7 @@ public class GameScreen implements Screen {
         stage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
         Gdx.input.setInputProcessor(stage);
 
-        greenCar = new Vehicle(150,"car_green/car_green_0002.png");
+        greenCar = new Vehicle(10, VehicleTypes.BUS);
         greenCar.setSize(
                 greenCar.getWidth() / 4f,
                 greenCar.getHeight() / 4f

@@ -11,17 +11,34 @@ public class Vehicle extends Actor {
 
     private float torque;
     private TextureRegion region;
-    private Vector2 savedPosition;
 
-    public boolean started;
-
-    public Vehicle(float engineTorque, String internalTexturePath) {
+    public Vehicle(float engineTorque, VehicleTypes vehicleType) {
         torque = engineTorque;
-        region = new TextureRegion(new Texture(internalTexturePath));
+        region = new TextureRegion(new Texture(getVehicleTexturePath(vehicleType)));
         setBounds(region.getRegionX(), region.getRegionY(),
                 region.getRegionWidth(), region.getRegionHeight());
-        started = false;
         addListener(new VehicleInputListener());
+    }
+
+    private String getVehicleTexturePath(VehicleTypes vehicleType) {
+        switch (vehicleType) {
+            case RED_CAR:
+                return "car_red/car_red_0002.png";
+            case GREEN_CAR:
+                return "car_green/car_green_0002.png";
+            case BLUE_CAR:
+                return "car_blue/car_blue_0002.png";
+            case POLICE_CAR:
+                return "policeCar/police_0002.png";
+            case PICKUP_TRUCK_ORANGE:
+                return "pickupTruck_orange/pickuptruck_orange_0002.png";
+            case PICKUP_TRUCK_PURPLE:
+                return "pickupTruck_purple/pickuptruck_purple_0002.png";
+            case BUS:
+                return "bus/bus_0002.png";
+            default:
+                throw new IllegalStateException("Unexpected value: " + vehicleType);
+        }
     }
 
     @Override
@@ -32,29 +49,4 @@ public class Vehicle extends Actor {
                 getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
     }
 
-    @Override
-    public void act(float delta) {
-        if (started) {
-            if (savedPosition == null) {
-                savedPosition = new Vector2(this.getX(), this.getY());
-            }
-            this.moveBy(5f, 0f);
-        }
-        else {
-            if (savedPosition != null) {
-                if (this.getX() == savedPosition.x && this.getY() == savedPosition.y) {
-                    savedPosition = null;
-                }
-                else {
-                    Vector2 move = new Vector2(
-                            savedPosition.x - this.getX(),
-                            savedPosition.y - this.getY()
-                    );
-                    move.nor();
-                    move.scl(5);
-                    this.moveBy(move.x, move.y);
-                }
-            }
-        }
-    }
 }
